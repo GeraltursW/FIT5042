@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>data</title>
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
+    <script src="../static/jquery.js"></script>
+</head>
+<body>
+<div class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <div class="navbar-brand">
+        Transaction Record
+    </div>
+</div>
+<div class="container">
+   <table class="table table-bordered">
+       <thead>
+             <tr>
+                 <th >ID</th>
+                 <th >sendAccount</th>
+                 <th >receiveAccount</th>
+                 <th >amount</th>
+                 <th >type</th>
+                 <th >time</th>
+                 <th> UserId</th>
+             </tr>
+       </thead>
+       <tbody>
+             <tr th:each="log,logStat : ${list}">
+                 <th th:text="${log.id}"></th>
+                 <th th:text="${log.send_account}"></th>
+                 <th th:text="${log.receive_account}"></th>
+                 <th th:text="${log.amount}"></th>
+                 <th th:text="${log.type}"></th>
+                 <th th:text="${log.send_time}"></th>
+                 <th th:text="${log.userId}"></th>
+             </tr>
+       </tbody>
+     </table>
+</div>
+</body>
+</html>
+<script>
+</script>

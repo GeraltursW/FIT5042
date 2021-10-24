@@ -1,0 +1,16 @@
+spring:
+
+
+ thymeleaf:
+    cache: false
+ mvc:
+    static-path-pattern: /static/**
+
+ mybatis:
+    mapper-locations: classpath*:com/**/dao/*.xml
+    type-aliases-package: com.example.cctest.**.bean
+ datasource:
+   url: jdbc:mysql://localhost:3306/test?useSSL=false
+   username: root
+   password: 123456
+   driverClassName: com.mysql.jdbc.Driver

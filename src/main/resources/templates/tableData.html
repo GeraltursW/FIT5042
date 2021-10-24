@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>data</title>
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
+    <script src="../static/jquery.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <div class="navbar-brand">
+             Information  List
+        </div>
+    </div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="account" class="col-sm-1 control-label">account</label>
+            <div class="col-sm-2">
+                <input type="text" th:value="${account}" class="form-control" id="account">
+            </div>
+            <label for="name" class="col-sm-1 control-label">name</label>
+            <div class="col-sm-2">
+                <input type="text" th:value="${name}"  class="form-control" id="name" >
+            </div>
+            <button type="button" id="query" class="btn btn-primary">Query</button>
+            <button type="button" id="reset" class="btn btn-primary">Reset</button>
+            <button type="button" id="viewLog" class="btn btn-primary">View Log</button>
+        </div>
+    </form>
+   <table class="table table-bordered">
+       <thead>
+             <tr>
+                 <th >ID</th>
+                 <th >Name</th>
+                 <th >Account</th>
+                 <th >balance</th>
+                 <th >operation</th>
+             </tr>
+       </thead>
+       <tbody>
+             <tr th:each="user,userStat : ${list}">
+                 <th th:text="${user.id}"></th>
+                 <th th:text="${user.name}"></th>
+                 <th th:text="${user.account}"></th>
+                 <th th:text="${user.balance}"></th>
+                 <th><button class="btn-danger" th:attr="data-id=${user.id}">delete</button></th>
+             </tr>
+       </tbody>
+
+     </table>
+    <div style="text-align: center">
+        <button id="logOut" class="btn-toolbar"> log out </button>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $("#query").click(function () {
+        var name = $("#name").val();
+        var account = $("#account").val()
+        $(location).attr('href','/data?name='+name+'&account='+account);
+
+    })
+    $("#reset").click(function () {
+       $("#name").val('') ;
+       $("#account").val('')
+
+    })
+    //direct to log table
+    $("#viewLog").click(function () {
+        $(location).attr('href','/log');
+    })
+    //log out
+    $("#logOut").click(function () {
+        $(location).attr('href','/index');
+    })
+
+    $('.btn-danger').click(function () {
+        var confirmation = confirm("Delete Confirmation");
+        if (confirmation) {
+            var id = $(this).attr('data-id');
+
+            $.ajax({
+                url: "/delete",
+                type: "post",
+                data: {
+                    "id": id
+                },
+                success: function (result) {
+                    if (result == 0) {
+                        return alert("Opreation Failed") //Due to network issure
+                    } else {
+                        window.location.reload()
+                    }
+                }
+            });
+        }
+    })
+</script>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cctest.log.dao.LogMapper">
+    <!-- 通用查询映射结果 -->
+    <!--<resultMap id="BaseResultMap" type="com.example.cctest.user.bean.UserBean">
+        <id column="ID" property="id" />
+        <result column="ACCOUNT" property="account" />
+        <result column="PASSWORD" property="password"/>
+        <result column="NAME" property="name" />
+        <result column="BALANCE" property="balance" />
+        <result column="TYPE" property="type" />
+    </resultMap>-->
+
+
+    <select id="getList" parameterType="String" resultType="java.util.Map">
+        SELECT bl.* FROM bank_log bl ORDER BY bl.ID
+    </select>
+    <insert id="insertData" parameterType="com.example.cctest.log.bean.LogBean">
+        insert into bank_log (id, send_account, receive_account,send_time,type,amonut,userId) values(#{logBean.id},#{logBean.send_account},#{logBean.receive_account},#{logBean.send_time},#{logBean.type},#{logBean.amount})
+    </insert>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cctest.user.dao.UserMapper">
+
+    <select id="getInfo" parameterType="String" resultType="com.example.cctest.user.bean.UserBean">
+        SELECT * FROM USERS
+         WHERE ACCOUNT = #{account}
+         AND PASSWORD =#{password}
+         AND TYPE =${type}
+    </select>
+
+
+    <select id="info" parameterType="int" resultType="com.example.cctest.user.bean.UserBean">
+        SELECT * FROM USERS
+         WHERE ID = #{id}
+
+    </select>
+
+    <select id="checkAccount" parameterType="String" resultType="int">
+        SELECT count(0) FROM USERS
+         WHERE ACCOUNT = #{account}
+    </select>
+
+    <select id="getList" parameterType="String" resultType="java.util.Map">
+        SELECT U.* FROM USERS U where U.type = 2
+        <if test="account != ''and account != null">
+        AND  u.account like concat(concat('%',#{account}),'%')
+        </if>
+        <if test="name != ''and name != null">
+        AND  u.name  like concat(concat('%',#{name}),'%')
+        </if>
+        ORDER BY U.ID
+    </select>
+
+    <insert id="add" parameterType="com.example.cctest.user.bean.UserBean">
+          insert into users(name, account,password,type,balance) values(#{userBean.name}, #{userBean.account},#{userBean.password},#{userBean.type},#{userBean.balance})
+    </insert>
+
+    <update id="addMoney">
+        update Users set balance = balance + #{money} where id = #{id}
+    </update>
+<!--    <insert id="insert1" parameterType="com.example.cctest.user.bean.UserBean" >-->
+<!--    </insert>-->
+    <update id="reduceMoney">
+        update Users set balance = balance - #{money} where id = #{id}
+    </update>
+
+    <select id="selectByAccount" parameterType="String" resultType="com.example.cctest.user.bean.UserBean">
+        SELECT * FROM USERS
+         WHERE account = #{account}
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM USERS WHERE ID = #{id}
+    </delete>
+
+</mapper>

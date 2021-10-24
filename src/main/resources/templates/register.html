@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
+    <script src="../static/jquery.js"></script>
+
+</head>
+<body>
+<div class="container bg-info">
+
+    <div class="row" style="margin-top: 100px"><div class="col-md-4 col-md-offset-5"><h3>Register</h3></div></div>
+    <div class="row" >
+
+        <div class="col-md-4 col-md-offset-4">
+            <form class="form-card" id="myForm">
+                <div class="row justify-content-between text-left">
+                    <label class="form-control-label px-3">Name<span class="text-danger"> *</span></label>
+
+                        <input type="text" class="form-control" id="name" placeholder="Enter your name" >
+
+                </div>
+
+                <div class="row justify-content-between text-left">
+                    <label class="form-control-label px-3">Account<span class="text-danger"> *</span></label>
+                        <input type="text" class="form-control" id="account" placeholder="Enter your account">
+                </div>
+
+                <div class="row justify-content-between text-left">
+                    <label for="password" class="form-control-label px-3">Password<span class="text-danger"> *</span></label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                </div>
+                <div class="row justify-content-between text-left">
+                    <label for="password2" class="form-control-label px-3">Confirm password <span class="text-danger"> *</span></label>
+                    <input type="password" class="form-control" id="password2" placeholder="Confirm your password">
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" id="submit" class="btn btn-black btn-lg">Submit</button>
+                        <button type="button" id="back" class="btn btn-outline-dark btn-lg">  Back  </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+
+    $("#submit").click(function(){
+        //验证
+        var name = $("#name").val();
+        var account = $("#account").val();
+        var password = $("#password").val();
+        if(name == ''){
+            return alert('Please enter your name')
+        }
+        if(account == ''){
+            return alert('Please enter your account')
+        }
+        if(password == ''){
+            return alert('Please enter password')
+        }
+        var password2 = $("#password2").val();
+        if (password!==password2){
+            return alert("Different Password")
+        }
+
+
+        var data = {};
+        data.name = name;
+        data.account = account;
+        data.password = password;
+        $.ajax({
+            url:"/toRegister",
+            type:"post",
+            data:data,
+            success:function(result){
+
+                if (result){
+                    alert(result)
+                } else {
+                    alert("Existed account")
+                }
+            }});
+    });
+
+    $("#back").click(function () {
+        $(location).attr('href','/index');
+    })
+</script>
